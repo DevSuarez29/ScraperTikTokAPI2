@@ -8,55 +8,45 @@ const menuItems = [
   { label: "Activity", url: "#" },
 ];
 
-const NavbarItemLink = ({ label, url, color }) => (
-  <NavbarItem>
-    <Link color={color} href={url}>{label}</Link>
-  </NavbarItem>
-);
-
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   return (
     <Navbar onMenuOpenChange={setIsMenuOpen} maxWidth="2xl">
-      <NavbarContent>
-        <NavbarMenuToggle
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          className="sm:hidden"
-        />
-        <NavbarBrand>
+      <NavbarContent className="sm:hidden" justify="start">
+        <NavbarMenuToggle aria-label={isMenuOpen ? "Close menu" : "Open menu"} className="sm:hidden"/>
+      </NavbarContent>
+      <NavbarContent className="sm:hidden pr-3" justify="center">
+        <NavbarBrand color="foreground" as={Link} href="/">
           <Webhook className="m-2" />
           <p className="font-bold text-inherit">ScraperTikTokAPI</p>
         </NavbarBrand>
-        <NavbarContent>
+      </NavbarContent>
+      <NavbarContent className="hidden sm:flex gap-5" justify="center">
+        <NavbarBrand color="foreground" as={Link} href="/">
+          <Webhook className="m-2" />
+          <p className="font-bold text-inherit">ScraperTikTokAPI</p>
+        </NavbarBrand>
+        <NavbarItem>
           {menuItems.map((item, index) => (
-            <NavbarItemLink key={index} label={item.label} url={item.url} color="foreground" />
+            <Button key={index} as={Link} href={item.url} variant="light">
+              {item.label}
+            </Button>
           ))}
-        </NavbarContent>
-        <NavbarContent justify="end">
+          <Button as={Link} href="/" variant="light">
+            Home
+          </Button>
+        </NavbarItem>
+      </NavbarContent>
+      <NavbarContent justify="end">
           <NavbarItem className="hidden lg:flex">
-            <Link href="#">Login</Link>
+            <Link color="foreground" href="#">Login</Link>
           </NavbarItem>
           <NavbarItem>
-            <Button as={Link} color="primary" href="#" variant="flat">
+            <Button as={Link} color="default" href="#" variant="flat">
               Sign Up
             </Button>
           </NavbarItem>
-        </NavbarContent>
-        <NavbarMenu>
-          {menuItems.map((item, index) => (
-            <NavbarMenuItem key={item.label}>
-              <Link
-                color={index === 2 ? "primary" : index === menuItems.length - 1 ? "danger" : "foreground"}
-                className="w-full"
-                href={item.url}
-                size="lg"
-              >
-                {item.label}
-              </Link>
-            </NavbarMenuItem>
-          ))}
-        </NavbarMenu>
       </NavbarContent>
     </Navbar>
   );
